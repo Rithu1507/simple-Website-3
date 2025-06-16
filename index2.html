@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Styling and JavaScript</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #0077b6;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .quiz, .api-data {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .quiz button, .api-data button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #00b4d8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .carousel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .carousel img {
+            width: 300px;
+            height: 200px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .carousel img {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Task 3: Advanced Styling and JavaScript</h1>
+        <p>Built for ApexPlanet Internship</p>
+    </header>
+
+    <section class="section quiz">
+        <h2>Interactive Quiz</h2>
+        <p id="question">What is the capital of France?</p>
+        <button onclick="showAnswer()">Show Answer</button>
+        <p id="answer" style="display: none; color: green;">Answer: Paris</p>
+    </section>
+
+    <section class="section carousel">
+        <button onclick="prevImage()">&#8592;</button>
+        <img id="carouselImage" src="https://picsum.photos/id/1018/600/400" alt="Carousel">
+        <button onclick="nextImage()">&#8594;</button>
+    </section>
+
+    <section class="section api-data">
+        <h2>Fetch a Joke (Public API)</h2>
+        <button onclick="fetchJoke()">Get a Joke</button>
+        <p id="joke"></p>
+    </section>
+
+    <script>
+        function showAnswer() {
+            document.getElementById("answer").style.display = "block";
+        }
+
+        const images = [
+            "https://picsum.photos/id/1018/600/400",
+            "https://picsum.photos/id/1025/600/400",
+            "https://picsum.photos/id/1037/600/400"
+        ];
+        let current = 0;
+
+        function updateImage() {
+            document.getElementById("carouselImage").src = images[current];
+        }
+
+        function nextImage() {
+            current = (current + 1) % images.length;
+            updateImage();
+        }
+
+        function prevImage() {
+            current = (current - 1 + images.length) % images.length;
+            updateImage();
+        }
+
+        async function fetchJoke() {
+            const response = await fetch("https://official-joke-api.appspot.com/random_joke");
+            const data = await response.json();
+            document.getElementById("joke").innerText = `${data.setup} - ${data.punchline}`;
+        }
+    </script>
+</body>
+
+</html>
